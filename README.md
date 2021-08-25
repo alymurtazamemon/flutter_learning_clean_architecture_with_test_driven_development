@@ -1,4 +1,4 @@
-# flutter_clean_architecture_with_test_driven_development
+# Flutter Learning Clean Architecture with Test Driven Development
 
 A new Flutter project.
 
