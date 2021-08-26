@@ -21,29 +21,26 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
-  cupertino_icons: ^1.0.2
-
-  # Remote API
   connectivity: ^3.0.6
-  http: ^0.13.3
+  cupertino_icons: ^1.0.2
   # For functional programming
   dartz: ^0.10.0
   # Value Equality
   equatable: ^2.0.3
+  flutter:
+    sdk: flutter
   # state management 
   flutter_bloc: ^7.2.0
   # service locator
   get_it: ^7.2.0
+  http: ^0.13.3
   # local cache  
   shared_preferences: ^2.0.7
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  mockito: ^5.0.15
-
+  mocktail: ^0.1.4
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter.
