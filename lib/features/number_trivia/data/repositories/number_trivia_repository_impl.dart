@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_clean_architecture_with_test_driven_development/core/network/network_info.dart';
 
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
-import '../../../../core/platform/network_info.dart';
 import '../../domain/entities/number_trivia.dart';
 import '../../domain/repositories/number_trivia_repository.dart';
 import '../datasources/number_trivia_local_data_source.dart';
