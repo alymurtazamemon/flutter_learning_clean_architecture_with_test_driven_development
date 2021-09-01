@@ -24,6 +24,13 @@ void main() {
     dataSource = NumberTriviaRemoteDataSourceImpl(client: mockHttpClient);
   });
 
+  void setUpMockHttpClientSuccess200() {
+    when(() => mockHttpClient.get(any(), headers: any(named: 'headers')))
+        .thenAnswer(
+      (_) async => http.Response(fixture('trivia.json'), 200),
+    );
+  }
+
   group('getConcreteNumberTrivia', () {
     final tNumber = 1;
     final tNumberTriviaModel =
@@ -33,10 +40,7 @@ void main() {
       'should preform a GET request on a URL with number being the endpoint and with application/json header',
       () async {
         //arrange
-        when(() => mockHttpClient.get(any(), headers: any(named: 'headers')))
-            .thenAnswer(
-          (_) async => http.Response(fixture('trivia.json'), 200),
-        );
+        setUpMockHttpClientSuccess200();
         // act
         dataSource.getConcreteNumberTrivia(tNumber);
 
@@ -54,10 +58,7 @@ void main() {
       'should return NumberTrivia when the response code is 200 (success)',
       () async {
         // arrange
-        when(() => mockHttpClient.get(any(), headers: any(named: 'headers')))
-            .thenAnswer(
-          (_) async => http.Response(fixture('trivia.json'), 200),
-        );
+        setUpMockHttpClientSuccess200();
         // act
         final result = await dataSource.getConcreteNumberTrivia(tNumber);
         // assert
