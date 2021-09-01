@@ -17,6 +17,7 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(Uri.parse('http://numbersapi.com/1'));
+    registerFallbackValue(Uri.parse('http://numbersapi.com/random'));
   });
 
   setUp(() {
@@ -77,6 +78,56 @@ void main() {
         final call = dataSource.getConcreteNumberTrivia;
         // assert
         expect(() => call(tNumber), throwsA(TypeMatcher<ServerException>()));
+      },
+    );
+  });
+
+  group('getRandomNumberTrivia', () {
+    final tNumber = 1;
+    final tNumberTriviaModel =
+        NumberTriviaModel.fromJson(json.decode(fixture('trivia.json')));
+
+    test(
+      'should preform a GET request on a URL with random number being the endpoint and with application/json header',
+      () async {
+        //arrange
+        setUpMockHttpClientSuccess200();
+        // act
+        dataSource.getRandomNumberTrivia();
+
+        // assert
+        verify(
+          () => mockHttpClient.get(
+            Uri.parse('http://numbersapi.com/random'),
+            headers: {'Content-Type': 'application/json'},
+          ),
+        );
+      },
+    );
+
+    test(
+      'should return NumberTrivia when the response code is 200 (success)',
+      () async {
+        // arrange
+        setUpMockHttpClientSuccess200();
+        // act
+        final result = await dataSource.getRandomNumberTrivia();
+        // assert
+        expect(result, equals(tNumberTriviaModel));
+      },
+    );
+    test(
+      'should throw a ServerException when the response code is 404 or other',
+      () async {
+        // arrange
+        when(() => mockHttpClient.get(any(), headers: any(named: "headers")))
+            .thenAnswer(
+          (_) async => http.Response('Something went wrong', 404),
+        );
+        // act
+        final call = dataSource.getRandomNumberTrivia;
+        // assert
+        expect(() => call(), throwsA(TypeMatcher<ServerException>()));
       },
     );
   });
