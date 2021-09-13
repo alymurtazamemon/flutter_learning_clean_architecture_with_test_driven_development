@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_clean_architecture_with_test_driven_development/features/number_trivia/presentation/bloc/number_trivia_bloc.dart';
+
+import '../../../../injection_container.dart';
 
 class NumberTriviaPage extends StatelessWidget {
   @override
@@ -7,20 +11,10 @@ class NumberTriviaPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Number Trivia'),
       ),
-    );
-  }
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Number Trivia',
-      theme: ThemeData(
-        primaryColor: Colors.yellow.shade800,
-        accentColor: Colors.yellow.shade600,
+      body: BlocProvider(
+        create: (_) => sl<NumberTriviaBloc>(),
+        child: Container(),
       ),
-      home: NumberTriviaPage(),
     );
   }
 }
