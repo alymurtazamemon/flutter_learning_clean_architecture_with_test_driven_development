@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../../../core/error/failures.dart';
 import '../../../../core/util/input_converter.dart';
 import '../../domain/entities/number_trivia.dart';
 import '../../domain/usecases/get_concrete_number_trivia.dart';
@@ -55,9 +56,28 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
         // Although the "success case" doesn't interest us with the current test,
         // we still have to handle it somehow.
         (integer) async* {
-          getConcreteNumberTrivia(Params(number: integer));
+          yield Loading();
+          final failureOrTrivia = await getConcreteNumberTrivia(
+            Params(number: integer),
+          );
+          yield failureOrTrivia.fold(
+            (failure) => Error(message: _mapFailureToMessage(failure)),
+            (trivia) => Loaded(trivia: trivia),
+          );
         },
       );
+    }
+  }
+
+  String _mapFailureToMessage(Failure failure) {
+    // Instead of a regular 'if (failure is ServerFailure)...'
+    switch (failure.runtimeType) {
+      case ServerFailure:
+        return SERVER_FAILURE_MESSAGE;
+      case CacheFailure:
+        return CACHE_FAILURE_MESSAGE;
+      default:
+        return 'Unexpected Error';
     }
   }
 }
