@@ -20,6 +20,10 @@ void main() {
   late MockGetRandomNumberTrivia mockGetRandomNumberTrivia;
   late MockInputConverter mockInputConverter;
 
+  setUpAll(() {
+    registerFallbackValue(Params(number: 1));
+  });
+
   setUp(() {
     mockGetConcreteNumberTrivia = MockGetConcreteNumberTrivia();
     mockGetRandomNumberTrivia = MockGetRandomNumberTrivia();
@@ -58,6 +62,41 @@ void main() {
 
         // assert
         verify(() => mockInputConverter.stringToUnsignedInteger(tNumberString));
+      },
+    );
+
+    test(
+      'should emit [Error] when the input is invalid',
+      () async {
+        // arrange
+        when(() => mockInputConverter.stringToUnsignedInteger(any()))
+            .thenReturn(Left(InvalidInputFailure()));
+        // assert later
+        final expected = [
+          // The initial state is always emitted first
+          // Empty(),
+          Error(message: INVALID_INPUT_FAILURE_MESSAGE),
+        ];
+        expectLater(bloc.stream, emitsInOrder(expected));
+        // act
+        bloc.add(GetTriviaForConcreteNumber(tNumberString));
+      },
+    );
+
+    test(
+      'should get data from the concrete use case',
+      () async {
+        // arrange
+        when(() => mockInputConverter.stringToUnsignedInteger(any()))
+            .thenReturn(Right(tNumberParsed));
+        when(() => mockGetConcreteNumberTrivia(any()))
+            .thenAnswer((_) async => Right(tNumberTrivia));
+        // act
+        bloc.add(GetTriviaForConcreteNumber(tNumberString));
+        await untilCalled(() => mockGetConcreteNumberTrivia(any()));
+        // assert
+        verify(
+            () => mockGetConcreteNumberTrivia(Params(number: tNumberParsed)));
       },
     );
   });
