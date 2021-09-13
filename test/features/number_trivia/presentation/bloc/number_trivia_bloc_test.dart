@@ -29,4 +29,9 @@ void main() {
       inputConverter: mockInputConverter,
     );
   });
+
+  test('initialState should be Empty', () {
+    // assert
+    expect(bloc.initialState, equals(Empty()));
+  });
 }
