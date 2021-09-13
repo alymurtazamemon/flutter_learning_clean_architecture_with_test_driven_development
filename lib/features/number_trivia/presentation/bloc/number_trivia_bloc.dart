@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 
 import '../../../../core/util/input_converter.dart';
 import '../../domain/entities/number_trivia.dart';
@@ -37,5 +36,11 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
   @override
   Stream<NumberTriviaState> mapEventToState(
     NumberTriviaEvent event,
-  ) async* {}
+  ) async* {
+    // Immediately branching the logic with type checking, in order
+    // for the event to be smart casted
+    if (event is GetTriviaForConcreteNumber) {
+      inputConverter.stringToUnsignedInteger(event.numberString);
+    }
+  }
 }
