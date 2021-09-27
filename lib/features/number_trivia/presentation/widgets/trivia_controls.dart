@@ -40,18 +40,24 @@ class _TriviaControlsState extends State<TriviaControls> {
           children: <Widget>[
             Expanded(
               // Search concrete button
-              child: RaisedButton(
+              child: ElevatedButton(
                 child: Text('Search'),
-                color: Theme.of(context).colorScheme.secondary,
-                textTheme: ButtonTextTheme.primary,
+                style: ElevatedButton.styleFrom(
+                  primary: Theme.of(context).colorScheme.secondary,
+                  onPrimary: Colors.black,
+                ),
                 onPressed: dispatchConcrete,
               ),
             ),
             SizedBox(width: 10),
             Expanded(
               // Random button
-              child: RaisedButton(
+              child: ElevatedButton(
                 child: Text('Get random trivia'),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.grey.shade300,
+                  onPrimary: Colors.black,
+                ),
                 onPressed: dispatchRandom,
               ),
             )
