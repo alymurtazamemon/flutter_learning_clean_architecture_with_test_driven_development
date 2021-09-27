@@ -1,4 +1,15 @@
-# Flutter Learning Clean Architecture with Test Driven Development
+# FLUTTER CLEARN ARCHITECTURE WITH TEST DRIVEN DEVELOPMENT
+
+This is the simple Flutter application, where user can get the trivia related to the number.
+
+There are two options,
+1. Input the Number and get the trivia related to that number 2. Get the random trivia.
+
+This application is the pure implementation of clean architecture in flutter with test driven development. Also it covers many topics, like Dependency Injection, State Management, Local Storage and much more.
+
+The credit goes to Reso Coder, who teaches us this amazing architecture pattern on his YouTube channel.
+
+Now after learning from him, I am implementing it by myself.
 
 <img src="readme_images/Mockup.png" width="720">
 
