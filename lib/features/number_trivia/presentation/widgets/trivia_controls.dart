@@ -42,7 +42,7 @@ class _TriviaControlsState extends State<TriviaControls> {
               // Search concrete button
               child: RaisedButton(
                 child: Text('Search'),
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).colorScheme.secondary,
                 textTheme: ButtonTextTheme.primary,
                 onPressed: dispatchConcrete,
               ),

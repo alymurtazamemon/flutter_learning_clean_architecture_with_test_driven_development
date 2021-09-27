@@ -16,7 +16,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.yellow.shade800,
-        accentColor: Colors.yellow.shade700,
+        colorScheme: ColorScheme.fromSwatch()
+            .copyWith(secondary: Colors.yellow.shade700),
       ),
       home: NumberTriviaPage(),
     );
